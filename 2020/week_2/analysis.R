@@ -7,6 +7,7 @@ library(lubridate)
 temperature <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-07/temperature.csv')
 
 # Wrangle ------------------------------------------------------- 
+
 city_temp <- temperature %>% 
 	filter(
 		city_name %in% c("MELBOURNE", "PERTH", "SYDNEY","BRISBANE"),
