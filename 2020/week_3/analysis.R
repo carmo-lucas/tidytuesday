@@ -34,7 +34,7 @@ ggplot(pass,aes(x = char_category,
 		axis.text = element_text(color = "white"),
 		plot.title = element_text(lineheight = 1),
 		plot.background = element_rect(fill = "#132125", color = NULL),
-		plot.caption = element_text(hjust = .5)
+		plot.caption = element_text(hjust = 0)
 		) +
 	scale_color_manual(values = c("#d33682","#268bd2","#2aa198"))+
 	coord_flip() +
@@ -42,7 +42,7 @@ ggplot(pass,aes(x = char_category,
 		y = "\nStrength",
 		x = "",
 		title = "Top 500 passwords do not \nfollow security recommendations",
-		caption = "Data: Information is beautiful | Viz: @carmo_lcl"
+		caption = "\nData: Information is beautiful | Viz: @carmo_lcl"
 	) +
 	annotate(geom = "text", x = 2, y = 20, label = "Passwords containing only letters \nor words are not as strong and more \nfrequent than passwords containing \na combination of these elements", 
 					 family = "Courier", color = "white", hjust = "left", size = 3)
