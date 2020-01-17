@@ -41,7 +41,7 @@ ggplot(pass,aes(x = char_category,
 	labs(
 		y = "\nStrength",
 		x = "",
-		title = "Top 500 passwords do not \nfollow security reccomendations",
+		title = "Top 500 passwords do not \nfollow security recommendations",
 		caption = "Data: Information is beautiful | Viz: @carmo_lcl"
 	) +
 	annotate(geom = "text", x = 2, y = 20, label = "Passwords containing only letters \nor words are not as strong and more \nfrequent than passwords containing \na combination of these elements", 
