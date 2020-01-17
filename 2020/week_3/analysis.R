@@ -39,7 +39,7 @@ ggplot(pass,aes(x = char_category,
 	scale_color_manual(values = c("#d33682","#268bd2","#2aa198"))+
 	coord_flip() +
 	labs(
-		y = "Strength",
+		y = "\nStrength",
 		x = "",
 		title = "Top 500 passwords do not \nfollow security reccomendations",
 		caption = "Data: Information is beautiful | Viz: @carmo_lcl"
