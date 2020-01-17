@@ -24,7 +24,7 @@ ggplot(pass,aes(x = char_category,
 								y = strength,
 								color = char_category)) +
 	geom_violin(fill = "none") +
-	geom_jitter(width = 0.1, alpha = 0.3) +
+	geom_jitter(width = 0.1, alpha = 0.3, size = 1) +
 	theme(
 		panel.background = element_rect(fill = "#132125", color= NULL),
 		panel.grid = element_blank(),
