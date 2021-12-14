@@ -13,7 +13,11 @@ Contributions to the [TidyTuesday challenge](https://github.com/rfordatascience/
 <!-- toc -->
 * **2020**
   - Week 02 [OZ Fires 🇦🇺🔥](https://github.com/carmo-lucas/tidytuesday/tree/master/2020/week_2)
-  - Week 03 [Passwords 🔑🔓](](https://github.com/carmo-lucas/tidytuesday/tree/master/2020/week_2)
+  - Week 03 [Passwords 🔑🔓](https://github.com/carmo-lucas/tidytuesday/tree/master/2020/week_2)
+* **2021**
+  - NULL
+* **2022**
+  - Comming Soon
 <!-- tocstop -->
 
 </details>
