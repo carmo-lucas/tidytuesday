@@ -17,7 +17,7 @@ Contributions to the [TidyTuesday challenge](https://github.com/rfordatascience/
 * **2021**
   - NULL
 * **2022**
-  - Comming Soon
+  - Coming Soon
 <!-- tocstop -->
 
 </details>
