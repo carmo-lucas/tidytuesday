@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(rvest)
+library(ggsvg)
 library(colorspace)
 
 # Read data ----
@@ -53,14 +54,50 @@ saturated_palette <- c(
     "#8a018c"
 )
 
-desaturated <- desaturate(palette, amount = .45)
+desaturated <- desaturate(saturated_palette, amount = .45)
 
+
+
+
+
+parse_svg <- function(x) {
+# Function that parses svg files into text.
+    svg_string <- paste(
+        readLines(x),
+        collapse = "\n"
+    )
+    return(svg_string)
+}
+
+
+# List svg files from the directory
+path_logos <- dir("2022/week_23/logo/",
+    pattern = "*.svg", 
+    full.names = TRUE,
+)
+
+# Create an object that contains the svg text of the logos
+image_logos <- map(path_logos, parse_svg)
+
+# Company names in the correct order for later matching
+company_names <- c("Amazon", "AT&T", "Comcast", "FedEx", "State Farm", "Toyota")
+
+# Set names for the logos
+names(image_logos) <- company_names
+
+# Create a dataframe with the information
+logos_df <- bind_rows(image_logos) %>%
+    pivot_longer(1:6) %>%
+    rename("company" = name)
+
+
+# Binds columns
 df <- pride_aggregates %>%
     select(company, total_contributed) %>%
     head(6) %>%
     mutate(companies = fct_reorder(company, total_contributed)) %>%
-    bind_cols("saturated" = saturated_palette)
-
+    bind_cols("saturated" = saturated_palette) %>%
+    left_join(logos_df)
 
 
 ggplot() +
@@ -80,6 +117,8 @@ ggplot() +
         ),
         width = 1
     ) +
+    geom_point_svg(data = df,
+    aes(x = companies,
+    y = 100000,svg = value)) +
     scale_fill_identity() +
-    coord_flip() +
-    theme_void()
+    coord_flip()
