@@ -17,7 +17,7 @@ Contributions to the [TidyTuesday challenge](https://github.com/rfordatascience/
 * **2021**
   - NULL
 * **2022**
-  - Coming Soon
+  - Week 23 [🏳️‍🌈](https://github.com/carmo-lucas/tidytuesday/tree/master/2022/week_23)
 <!-- tocstop -->
 
 </details>
