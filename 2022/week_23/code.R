@@ -4,6 +4,28 @@ library(tidyverse)
 library(rvest)
 library(ggsvg)
 library(colorspace)
+library(glue)
+library(ggtext)
+library(ragg)
+
+# Functions ----
+
+
+agora <- function() {
+    x <- format(Sys.time(), "%Y-%m-%d %H%M%S")
+    return(x)
+}
+
+
+parse_svg <- function(x) {
+    # Function that parses svg files into text.
+    svg_string <- paste(
+        readLines(x),
+        collapse = "\n"
+    )
+    return(svg_string)
+}
+
 
 # Read data ----
 
@@ -54,25 +76,11 @@ saturated_palette <- c(
     "#8a018c"
 )
 
-desaturated <- desaturate(saturated_palette, amount = .45)
-
-
-
-
-
-parse_svg <- function(x) {
-# Function that parses svg files into text.
-    svg_string <- paste(
-        readLines(x),
-        collapse = "\n"
-    )
-    return(svg_string)
-}
-
+desaturated <- darken(saturated_palette, amount = .45)
 
 # List svg files from the directory
 path_logos <- dir("2022/week_23/logo/",
-    pattern = "*.svg", 
+    pattern = "*.svg",
     full.names = TRUE,
 )
 
@@ -106,7 +114,8 @@ ggplot() +
             x = df$companies,
             y = Inf,
             fill = desaturated
-        ), width = 1
+        ),
+        width = 1
     ) +
     geom_col(
         data = df,
@@ -117,8 +126,58 @@ ggplot() +
         ),
         width = 1
     ) +
-    geom_point_svg(data = df,
-    aes(x = companies,
-    y = 100000,svg = value)) +
+    geom_point_svg(
+        data = df,
+        aes(
+            x = companies,
+            y = total_contributed + 80000,
+            svg = value
+        ),
+        size = 10,
+        hjust = 1
+    ) +
+        geom_text(
+            data = df,
+            aes(
+                x = companies,
+                y = total_contributed - 5000,
+                label = paste0("U$", round(total_contributed / 1e3, 0), " K")
+            ),
+            color = "white",
+            hjust = 1,
+            size = 3
+        ) +
     scale_fill_identity() +
-    coord_flip()
+        coord_flip() +
+        labs(
+            title =
+                "<span style = 'color:#FFFFFF'> Companies that donated money to </span>
+        <span style = 'color:#fe0000';>P</span>
+        <span style = 'color:#fe8d00';>R</span>
+        <span style = 'color:#ffee00';>I</span>
+        <span style = 'color:#018114';>D</span>
+        <span style = 'color:#014cff';>E</span>
+        <span style = 'color:#8a018c';>!</span>"
+        ) +
+        theme(
+            text = element_text(family = "Roboto"),
+            plot.title.position = "panel",
+            plot.title = element_textbox_simple(margin = margin(5, 0, 5, 0, "mm")),
+            axis.title = element_blank(),
+            axis.text = element_blank(),
+            axis.ticks = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.background = element_blank(),
+            plot.background = element_rect(fill = "#333333", color = "#333333")
+        )
+
+
+
+ggsave(
+    glue("2022/week_23/plot/{agora()}.png"),
+    device = ragg::agg_png(),
+    dpi = 300,
+    width = 1400,
+    height = 800,
+    units = "px"
+)
