@@ -151,7 +151,7 @@ ggplot() +
         coord_flip() +
         labs(
             title =
-                "<span style = 'color:#FFFFFF'> Companies that donated money to </span>
+        "<span style = 'color:#FFFFFF'> Companies that donated money to </span>
         <span style = 'color:#fe0000';>P</span>
         <span style = 'color:#fe8d00';>R</span>
         <span style = 'color:#ffee00';>I</span>
@@ -162,7 +162,8 @@ ggplot() +
         theme(
             text = element_text(family = "Roboto"),
             plot.title.position = "panel",
-            plot.title = element_textbox_simple(margin = margin(5, 0, 5, 0, "mm")),
+            plot.title = element_textbox_simple(
+                margin = margin(5, 0, 5, 0, "mm")),
             axis.title = element_blank(),
             axis.text = element_blank(),
             axis.ticks = element_blank(),
