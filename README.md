@@ -29,3 +29,6 @@ Contributions to the [TidyTuesday challenge](https://github.com/rfordatascience/
 
 ### [2020 Week 3](https://github.com/carmo-lucas/tidytuesday/tree/master/2020/week_3)
 ![https://github.com/carmo-lucas/tidytuesday/blob/master/2020/week_3/tt_week3_plot.png](https://github.com/carmo-lucas/tidytuesday/blob/master/2020/week_3/tt_week3_plot.png?raw=true)
+
+### [2022 Week 23](https://github.com/carmo-lucas/tidytuesday/tree/master/2022/week_23)
+![https://github.com/carmo-lucas/tidytuesday/blob/master/2022/week_23/week23_plot.png](https://github.com/carmo-lucas/tidytuesday/blob/master/2022/week_23/plot/week_23-plot.png?raw=true)
