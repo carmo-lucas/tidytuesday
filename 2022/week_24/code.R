@@ -3,6 +3,7 @@
 library(tidyverse)
 library(tidycensus)
 library(mapproj)
+library(glue)
 
 
 # Loading data ----
@@ -14,9 +15,9 @@ county_fips <- county.fips %>%
     mutate(FIPS = str_pad(fips, 5L, "left", "0")) %>%
     as_tibble()
 
-drought <- readr::read_csv(
-    "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-06-14/drought.csv"
-) %>% as_tibble()
+# drought <- readr::read_csv(
+#     "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-06-14/drought.csv"
+# ) %>% as_tibble()
 
 drought_fips <- readr::read_csv(
     "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-06-14/drought-fips.csv"
@@ -36,23 +37,32 @@ coordinates <-
     full_join(county_fips, counties_coord) %>%
     select(FIPS, long, lat, state, county)
 
-DF_2000 <-
-    filter(drought_fips, lubridate::year(date) == 2000) %>%
-    mutate(DSCI = cut(DSCI, 5))
+drought_fips_summary <-
+    drought_fips %>%
+    mutate(month = lubridate::month(date), year = lubridate::year(date)) %>%
+    group_by(month, year, FIPS) %>%
+    summarize(mean_DSCI = mean(DSCI, rm.na = FALSE)) %>%
+    ungroup() %>%
+    mutate(cut_DSCI = cut(mean_DSCI, 7)) %>%
+    group_by(year, month) %>%
+    nest()
 
-df <-
-    left_join(DF_2000, coordinates) %>% drop_na()
 
 
 
-# Plotting ----
+
+df <- left_join(filtered_more, coordinates) %>% drop_na()
+
+# Generate plots ----
 
 p <- ggplot(
     data = df,
-    mapping = aes(x = long, y = lat, fill = DSCI, group = FIPS)
-) +
+    mapping = aes(x = long, y = lat, fill = cut_DSCI, group = FIPS)) +
     geom_polygon() +
     coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
-    scale_fill_brewer(type = "div", palette =  "RdYlBu")
+    scale_fill_brewer(type = "div", palette = "RdYlBu") +
+    theme_void()
 
-ggsave(p, "2022/week_24/plot.png")
+ggsave(p, glue("2022/week_24/plot/{year}-{month}.png"))
+
+drought_fips_summary$data
